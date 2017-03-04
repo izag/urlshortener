@@ -1,0 +1,20 @@
+{% extends "shortenersite/base.html" %}
+
+{% block title %}URL Shortner - {{ SITE_URL }}{{ current_url.short_id }}{% endblock %}
+
+{% block subheader %}{{ SITE_URL }}{{ current_url.short_id }}{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+	<tbody>
+		<tr><td><strong>Shortcut</strong></td><td>{{ SITE_URL }}{{ current_url.short_id }}</td></tr>
+		<tr><td><strong>Link</strong></td>
+			<td><a href="{% url 'shortenersite:redirectoriginal' short_id=current_url.short_id %}">{{ current_url.httpurl }}</a></td>
+		</tr>
+		<tr><td><strong>Popularity</strong></td><td>{{ current_url.count }}</td></tr>
+		<tr><td><strong>Added</strong></td><td>{{ current_url.pub_date }}</td></tr>
+	</tbody>
+</table>
+
+{% endblock %}

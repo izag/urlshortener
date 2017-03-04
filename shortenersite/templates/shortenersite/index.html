@@ -5,15 +5,52 @@
 {% block content %}
 
 <div class="panel panel-default">
- <div class="panel-body">
- <div class="col-sm-9">
- <input type="text" name="url" id="url" class="form-control input-sm" placeholder="http://www.facebook.com" />
- </div>
- <div class="col-sm-3">
- {% csrf_token %}
- <button id="submitButton" class="btn btn-primary">Submit</button></p>
- </div>
- </div>
- <div class="panel-footer"><span id="url-result">Enter the URL above and click submit!</span></div>
+	<div class="panel-body">
+	<form action="{% url 'shortenersite:shortenurl' %}" method="post">
+		{% csrf_token %}
+		<div class="col-sm-9">
+		<input type="text" name="url" id="url" class="form-control input-sm" placeholder="Your url here" />
+		</div>
+		<div class="col-sm-3">
+		<input type="submit" value="Submit" class="btn btn-primary" />
+		</div>
+	</form>
+	</div>
+
+	{% if messages %}
+		{% for message in messages %}
+		<div class="panel-footer url-result-error"><span id="url-result">{{ message }}</span></div>
+		{% endfor %}
+	{% elif short_url %}
+	<div class="panel-footer url-result"><span id="url-result">{{ short_url }}</span></div>
+	{% else %}
+	<div class="panel-footer url-result"><span id="url-result">Enter the URL above and click submit!</span></div>
+	{% endif %}
 </div>
+
+<header>
+ <h1><small>Popular Links</small></h1>
+</header>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th class="col3 header">Shortcut</th>
+			<th class="col3 header">Urls</th>
+			<th class="col3 header">Popularity</th>
+			<th class="col3 header">Added</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for url in popular_urls %}
+		<tr>
+			<td><a href="{% url 'shortenersite:details' pk=url.short_id %}">{{ url.short_id }}</a></td>
+			<td><a href="{% url 'shortenersite:redirectoriginal' short_id=url.short_id %}">{{ url.httpurl }}</a></td>
+			<td>{{ url.count }}</td>
+			<td>{{ url.pub_date }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
 {% endblock %}

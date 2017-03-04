@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shortenersite.context_processors.global_settings'
             ],
         },
     },
@@ -124,4 +125,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SITE_URL = "http://localhost:8000"
+SITE_URL = "http://localhost:8000/"

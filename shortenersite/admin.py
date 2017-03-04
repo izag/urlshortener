@@ -4,6 +4,6 @@ from .models import Urls
 
 class UrlsAdmin(admin.ModelAdmin):
     list_display = ('short_id','httpurl','pub_date', 'count')
-    ordering = ('-pub_date',)
+    ordering = ('-count', '-pub_date',)
 
 admin.site.register(Urls, UrlsAdmin) # Register the Urls model with UrlsAdmin options
