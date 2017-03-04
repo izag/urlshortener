@@ -9,6 +9,12 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 @method_decorator(csrf_protect, name='dispatch')
@@ -20,11 +26,13 @@ class IndexView(generic.ListView):
 		"""Return the most popular 20 urls."""
 		return Urls.objects.all()[:20]
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class DetailView(generic.DetailView):
 	model = Urls
 	context_object_name = 'current_url'
 	template_name = 'shortenersite/details.html'
 
+@cache_page(CACHE_TTL)
 def redirect_original(request, short_id):
 	url = get_object_or_404(Urls, pk = short_id)
 	url.count += 1

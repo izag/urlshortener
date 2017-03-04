@@ -14,10 +14,10 @@
 
 <nav class="navbar navbar-default">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li {% ifequal request.path "/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:home' %}">Home</a></li>
-        <li {% ifequal request.path "/all/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:listall' %}">All</a></li>
-      </ul>
+	  <ul class="nav navbar-nav navbar-right">
+		<li {% ifequal request.path "/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:home' %}">Home</a></li>
+		<li {% ifequal request.path "/all/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:listall' %}">All</a></li>
+	  </ul>
   </div>
 </nav>
 
