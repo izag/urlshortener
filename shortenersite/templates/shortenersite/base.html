@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>{% block title %}Welcome to mysite{% endblock %}</title>
+ <title>{% block title %}{% endblock %}</title>
  {% load staticfiles %}
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
  <link rel="stylesheet" type="text/css" href="{% static 'shortenersite/css/custom.css' %}" />
@@ -11,8 +11,18 @@
 
 <body>
 <div id="wrap">
+
+<nav class="navbar navbar-default">
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li {% ifequal request.path "/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:home' %}">Home</a></li>
+        <li {% ifequal request.path "/all/" %}class="active"{% endifequal %}><a href="{% url 'shortenersite:listall' %}">All</a></li>
+      </ul>
+  </div>
+</nav>
+
 <header>
- <h1><a href="{% url 'shortenersite:home' %}">URL Shortner</a><br/><small>{% block subheader %}Shorten the URL{% endblock %}</small></h1>
+ <h1><a href="{% url 'shortenersite:home' %}">URL Shortener</a><br/><small>{% block subheader %}Shorten the URL{% endblock %}</small></h1>
 </header>
 
 <div id="content">

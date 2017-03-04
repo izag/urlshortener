@@ -17,4 +17,11 @@
 	</tbody>
 </table>
 
+<a href="{% url 'shortenersite:home' %}" class="btn btn-info" role="button">Add another</a>
+
+<form action="{% url 'shortenersite:delete_url' pk=current_url.short_id %}" method="post" class="pull-right">
+	{% csrf_token %}
+	<input type="submit" value="Delete" class="btn" onclick="return confirm('Are you sure?');">
+</form>
+
 {% endblock %}

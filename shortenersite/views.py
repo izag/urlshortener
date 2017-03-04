@@ -7,7 +7,11 @@ from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 
+
+@method_decorator(csrf_protect, name='dispatch')
 class IndexView(generic.ListView):
 	template_name = 'shortenersite/index.html'
 	context_object_name = 'popular_urls'
@@ -53,12 +57,13 @@ def get_short_code():
 		except:
 			return short_id
 
+@method_decorator(csrf_protect, name='dispatch')
 class UrlsListView(generic.ListView):
 	context_object_name = 'urls'
-	template_name = 'shortenersite/list.html'
+	template_name = 'shortenersite/all.html'
 
 	def get_queryset(self):
-		urls = Article.objects.all()
+		urls = Urls.objects.all()
 		paginator = Paginator(urls, 10)
 		page = self.request.GET.get('page')
 
@@ -74,4 +79,4 @@ class UrlsListView(generic.ListView):
 
 class DeleteView(generic.DeleteView):
 	model = Urls
-	success_url = reverse_lazy('home')
+	success_url = reverse_lazy('shortenersite:listall')

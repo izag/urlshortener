@@ -1,0 +1,56 @@
+{% extends "shortenersite/base.html" %}
+
+{% block title %}URL Shortner - Make your URL shorter!{% endblock %}
+
+{% block subheader %}Saved urls{% endblock %}
+
+{% block content %}
+
+{% if urls %}
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Shortcut</th>
+			<th>Urls</th>
+			<th>Popularity</th>
+			<th>Added</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for url in urls %}
+		<tr>
+			<td><a href="{% url 'shortenersite:details' pk=url.short_id %}">{{ url.short_id }}</a></td>
+			<td><a href="{% url 'shortenersite:redirectoriginal' short_id=url.short_id %}">{{ url.httpurl }}</a></td>
+			<td>{{ url.count }}</td>
+			<td>{{ url.pub_date }}</td>
+			<td>
+				<form action="{% url 'shortenersite:delete_url' pk=url.short_id %}" method="post">
+					{% csrf_token %}
+					<input type="submit" value="Delete" class="btn" onclick="return confirm('Are you sure?');">
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<ul class="pagination">
+	{% if urls.has_previous %}
+	<li><a href="?page={{ urls.previous_page_number }}">&larr; Previous</a></li>
+	{% endif %}
+
+	<li class="disabled"><a href="#">Page {{ urls.number }} of {{ urls.paginator.num_pages }}</a></li>
+
+	{% if urls.has_next %}
+	<li><a href="?page={{ urls.next_page_number }}">Next &rarr;</a></li>
+	{% endif %}
+</ul>
+
+{% else %}
+<div class="well">
+	<em>Nothing to display</em>
+</div>
+{% endif %}
+
+{% endblock %}

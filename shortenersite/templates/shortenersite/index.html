@@ -28,6 +28,8 @@
 	{% endif %}
 </div>
 
+{% if popular_urls %}
+
 <header>
  <h1><small>Popular Links</small></h1>
 </header>
@@ -35,10 +37,10 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th class="col3 header">Shortcut</th>
-			<th class="col3 header">Urls</th>
-			<th class="col3 header">Popularity</th>
-			<th class="col3 header">Added</th>
+			<th>Shortcut</th>
+			<th>Urls</th>
+			<th>Popularity</th>
+			<th>Added</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -52,5 +54,7 @@
 		{% endfor %}
 	</tbody>
 </table>
+
+{% endif %}
 
 {% endblock %}

@@ -29,20 +29,3 @@ header {
 	color: #a94442;
 	background-color: #f2dede;
 }
-
-table.tableitems em {
-    color: #aaa;
-}
-
-table.tableitems .col3, table.tableitems .col4 {
-    width: 10%;
-    min-width: 100px;
-}
-
-table.tableitems .col5 {
-    width: 30%;
-    min-width: 300px;
-}
-
-table.tableitems .header {
-}
